@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+        <br><br>
+        <h1 class="header center purple-text">Life-Quest</h1>
+        <div class="row center">
+            {% load static %}
+            <img src="{% static 'img/wizard.svg' %}" > 
+           <h5 class="header col s12 light">Level Up Your Life</h5>
+        </div>
+        <div class="row center">
+            <a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light purple">Get Started</a>
+        </div>
+        <br><br>
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center light-blue-text"><i class="material-icons">mood</i></h2>
+            <h5 class="center">Personalized Missions</h5>
+
+            <p class="light"> We provide each member with personalized self-improvement plans backed by scientific study.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center light-blue-text"><i class="material-icons">terrain</i></h2>
+            <h5 class="center">Improvement Tracking</h5>
+
+            <p class="light">Our custom software makes it easy for you to track how you feel from day to day and help you keep score.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center light-blue-text"><i class="material-icons">public</i></h2>
+            <h5 class="center">Totally Free</h5>
+
+            <p class="light">The Goal of Life-Quest is to create a recommendation system that brings out the best in people. It's free -- Give it a shot.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <br><br>
+  </div>
+{% endblock %}
