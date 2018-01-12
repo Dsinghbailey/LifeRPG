@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>Login</h3>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <p>
+            {{ field.label_tag }}<br>
+            {{ field }}
+            {% if field.help_text %}
+            <p class="red-text">{{ field.help_text }}</p>
+            {% endif %}
+            {% for error in field.errors %}
+            <p class="red-text">{{ error }}</p>
+            {% endfor %}
+        </p>
+        {% endfor %}
+        <button type="submit" class="btn-large waves-effect waves-light purple center">
+            Login
+        </button>
+</form>
+<dib>
+{% endblock %}

@@ -13,6 +13,7 @@ class Mission(models.Model):
 
 class Aspect(models.Model):
     name = models.CharField(max_length=50)
+    description = models.CharField(max_length=200, null=True)
 
 
 class MissionAspects(models.Model):

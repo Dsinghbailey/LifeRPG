@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}LevelUp{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>Level Up</h3>
+    <br>
+    <div class="row">
+        <div class="card horizontal amber lighten-5">
+            <div class="card-image right white">
+                {% load static %}
+                <img src="{% static 'img/wizard.svg' %}" style='width:100px; height:100px'" >
+            </div>
+            <div class="card-content">
+                <span class="card-title">Great Job!</span>
+                <p>Choose up to 3 aspects to improve on during the journey to your next level.</p>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row" >
+        {% for aspect in aspects %}
+        <div class="col s12 m4">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{aspect.name}}</span>
+                    <p>{{aspect.description}}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <br>
+
+
+</div>
+{% endblock %}
