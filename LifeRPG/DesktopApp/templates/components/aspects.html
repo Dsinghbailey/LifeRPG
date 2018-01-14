@@ -1,0 +1,16 @@
+<table>
+    <thead>
+        <tr>
+            <th>Aspect</th>
+            <th>Points</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for aspect in user_aspects %}
+        <tr>
+            <td>{{ aspect }}</td>
+            <td>{{ aspect.points }}</td>
+        </tr>
+        {% endfor %}
+    </tbody
+</table>>

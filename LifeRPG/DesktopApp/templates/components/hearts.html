@@ -1,0 +1,7 @@
+{% load static %}
+{% for i in heart_range %}
+<img src="{% static 'img/heart.svg' %}" style="height:50px; width:50px">
+{% endfor %}
+{% for i in empty_range %}
+<img src="{% static 'img/empty_heart.svg' %}" style="height:50px; width:50px">
+{% endfor %}

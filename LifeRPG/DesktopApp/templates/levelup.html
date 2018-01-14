@@ -7,16 +7,8 @@
     <h3>Level Up</h3>
     <br>
     <div class="row">
-        <div class="card horizontal amber lighten-5">
-            <div class="card-image right white">
-                {% load static %}
-                <img src="{% static 'img/wizard.svg' %}" style='width:100px; height:100px'" >
-            </div>
-            <div class="card-content">
-                <span class="card-title">Great Job!</span>
-                <p>Choose up to 3 aspects to improve on during the journey to your next level.</p>
-            </div>
-        </div>
+        {% load component_tags %}
+        {% help_box title='Great Job!' content='Choose up to 3 aspects of your life to improve on during the journey to your next level.' %}
     </div>
     <br>
     <div class="row" >
@@ -32,6 +24,10 @@
         {% endfor %}
     </div>
     <br>
+    <div class="row center">
+        <a href="/profile" id="download-button" class="btn-large waves-effect waves-light purple">Complete</a>
+    </div>
+
 
 
 </div>

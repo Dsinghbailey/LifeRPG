@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Tutorial{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>Tutorial</h3>
+    <br>
+    {% load component_tags %}
+    {% help_box title='Welcome to Life-Quest' content='Your goal is to level up by completing missions. Missions give you XP and you level up once your XP bar is full. Here is your XP bar and current level.' %}
+{% level_bar %}
+    <br>
+    {% help_box title='' content='Hearts are a multiplier for your XP. If you have 3 hearts you gain 3x XP per mission. If you have 0 Hearts you gain 0 XP. Every day you skip a mission you lose a heart. You can regain a heart by completing 7 days of missions.' %}
+    {% hearts %}
+
+
+
+
+</div>
+
+{% endblock %}

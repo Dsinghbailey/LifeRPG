@@ -2,17 +2,26 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth import logout
 from .models import Profile, Aspect
-
-# Create your views here.
 
 
 def home(request):
+    if request.user.is_authenticated():
+        return redirect(profile)
     return render(request, 'index.html', context={})
 
 
-def register(request):
+def logout_view(request):
+    logout(request)
+    return redirect('home')
+
+
+def contact(request):
+    return render(request, 'contact.html', context={})
+
+
+def register_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -28,12 +37,22 @@ def register(request):
 
 
 @login_required
-def profile(request):
-    if not Profile.objects.filter(user=request.user.id).exists():
-        return redirect(levelup)
-    profile = Profile.objects.filter(user=request.user.id)
+def tutorial(request):
+    if not Profile.objects.filter(user=request.user).exists():
+        Profile.objects.create(user=request.user, level=0,
+                               xp=0, hearts=3)
+    profile = Profile.objects.get(user=request.user)
     context = {'profile': profile}
-    return render(request, 'profile.html', context)
+    return render(request, 'tutorial.html', context)
+
+
+@login_required
+def profile(request):
+    if not Profile.objects.filter(user=request.user).exists():
+        return redirect(tutorial)
+    profile = Profile.objects.get(user=request.user)
+    context = {'profile': profile}
+    return render(request, 'profile.html', context=context)
 
 
 @login_required
@@ -41,3 +60,8 @@ def levelup(request):
     aspects = Aspect.objects.all()
     context = {'aspects': aspects}
     return render(request, 'levelup.html', context)
+
+
+@login_required
+def missions(request):
+    return render(request, 'missions.html')

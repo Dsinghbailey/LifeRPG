@@ -4,7 +4,22 @@
 
 {% block content %}
 <div class="container">
-    <h3>{{ user.get_username }}</h3>
-profile
-<dib>
+    <h3>Profile</h3>
+    <br>
+    {% load component_tags %}
+    {% level_bar %}
+    <div style="margin-top:-17px">
+        {% hearts %}
+    </div>
+</div>
+
+<div class="row center">
+    <a href="/tutorial" id="download-button" class="btn-large waves-effect waves-light purple">Tutorial</a>
+</div>
+
+
+<div class="row center">
+    <a href="/logout" id="download-button" class="btn-large waves-effect waves-light purple">Logout</a>
+</div>
+
 {% endblock %}

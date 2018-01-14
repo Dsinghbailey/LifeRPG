@@ -11,17 +11,18 @@
         <p>
             {{ field.label_tag }}<br>
             {{ field }}
-            {% if field.help_text %}
-            <p class="red-text">{{ field.help_text }}</p>
-            {% endif %}
-            {% for error in field.errors %}
-            <p class="red-text">{{ error }}</p>
-            {% endfor %}
         </p>
         {% endfor %}
+        {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+        <p class="red-text">{{ error }}</p>
+        {% endfor %}
+        {% endif %}
+
+       
         <button type="submit" class="btn-large waves-effect waves-light purple center">
             Login
         </button>
 </form>
-<dib>
+</div>
 {% endblock %}

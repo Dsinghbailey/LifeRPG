@@ -22,14 +22,28 @@ class MissionAspects(models.Model):
 
 
 class UserMissionRatings(models.Model):
+    log_time = models.DateField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE)
+    rating = models.IntegerField()
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     level = models.IntegerField()
     xp = models.IntegerField()
+    hearts = models.IntegerField()
+
+    @property
+    def aspects(self):
+
+        return list(self.friends.all())
+
+
+class UserAspects(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    aspect = models.ForeignKey(Aspect, on_delete=models.CASCADE)
+    points = models.IntegerField()
 
 
 class UserLevelUps(models.Model):
@@ -37,9 +51,3 @@ class UserLevelUps(models.Model):
     levelup_time = models.DateField()
     level = models.IntegerField()
     aspect = models.ForeignKey(Aspect, null=True, on_delete=models.SET_NULL)
-
-
-class UserMoods(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    log_time = models.DateField()
-    mood = models.IntegerField()

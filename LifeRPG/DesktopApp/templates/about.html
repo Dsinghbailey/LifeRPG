@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>About</h3>
+    <div class="card amber lighten-5">
+        <div class="card-content">
+            <h4 class="center">The RPG You're Already Playing</h4>
+            <br>
+            <div class="center">
+                {% load static %}
+                <img src="{% static 'img/wizard.svg' %}" style='width:100px; height:100px' >
+            </div>
+            <br>
+            <p>
+                Life-Quest is a game that's meant to help people break out of their cycles and improve themselves through new experiences. At it's core, Life-Quest is a personalized recommendation and motivation engine that uses machine learning to match users to missions best suited to their personalities. As you progress through the game you'll level up and have access to new missions that are better suited to your personality, but watch-out! --if you fail to complete at least one mission a day you will lose hearts and have a harder time leveling up.
+            </p>
+            <h4 class="center">Good luck!</h4>
+            <p class="center">-D</p>
+            <br>
+            <div class="center">
+                {% load static %}
+                <img src="{% static 'img/dragon.svg' %}" style='width:100px; height:100px' >
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
