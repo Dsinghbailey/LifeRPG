@@ -1,0 +1,53 @@
+<div class="col s12 m10  offset-m1 card grey lighten-4">
+    <h5>Points to spend: <span id="to-spend">3</span></h5>
+    <table class="bordered">
+        <thead>
+            <tr>
+                <th> Aspect </th>
+                <th> Points </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user_aspect in profile.user_aspects %}
+            <tr>
+                <td><h5>{{user_aspect.aspect.name}}</h5></td>
+                <td><h5 id="{{user_aspect.aspect.id}}_points">0</h5></td>
+                    <td>
+                        <a class="btn-floating waves-effect waves-light  light-blue darken-3 center white-text" id="{{user_aspect.aspect.id}}_minus">-</a>
+
+                        <a class="btn-floating waves-effect waves-light light-blue darken-3 center white-text" id="{{user_aspect.aspect.id}}_plus">+</a>
+                    </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+ $( document ).ready(function() {
+     {% for user_aspect in profile.user_aspects %}
+     $("#{{user_aspect.aspect.id}}_minus").click(function () {
+         var oldVal = $("#to-spend").html();
+         console.log(oldVal);
+         if (oldVal < {{ max_points }}){
+             var newVal = parseInt(oldVal) + 1
+             $("#to-spend").html(newVal);
+             var oldVal = $("#{{user_aspect.aspect.id}}_points").html();
+             var newVal = parseInt(oldVal) - 1
+             $("#{{user_aspect.aspect.id}}_points").html(newVal)
+         }
+     });
+     $("#{{user_aspect.aspect.id}}_plus").click(function () {
+         var oldVal = $("#to-spend").html();
+         if (oldVal>0){
+             var newVal = parseInt(oldVal) - 1
+             $("#to-spend").html(newVal);
+             var oldVal = $("#{{user_aspect.aspect.id}}_points").html();
+             var newVal = parseInt(oldVal) + 1
+             $("#{{user_aspect.aspect.id}}_points").html(newVal)
+         }
+
+     });
+     {% endfor %}
+});
+</script>

@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from .models import Profile, Aspect
+from .models import Profile, Aspect, UserAspect
 
 
 def home(request):
@@ -41,6 +41,10 @@ def tutorial(request):
     if not Profile.objects.filter(user=request.user).exists():
         Profile.objects.create(user=request.user, level=0,
                                xp=0, hearts=3)
+        aspects = Aspect.objects.all()
+        for aspect in aspects:
+            UserAspect.objects.create(user=request.user, aspect=aspect,
+                                      points=0)
     profile = Profile.objects.get(user=request.user)
     context = {'profile': profile}
     return render(request, 'tutorial.html', context)
@@ -57,11 +61,11 @@ def profile(request):
 
 @login_required
 def levelup(request):
-    aspects = Aspect.objects.all()
-    context = {'aspects': aspects}
-    return render(request, 'levelup.html', context)
+    profile = Profile.objects.get(user=request.user)
+    context = {'profile': profile, 'max_points': 3}
+    return render(request, 'levelup.html', context=context)
 
 
 @login_required
 def missions(request):
-    return render(request, 'missions.html')
+    return render(request, 'missions.html', {'missions': range(5)})

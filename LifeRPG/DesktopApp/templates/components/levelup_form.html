@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="grey lighten-4">
+        <span>Focus</span>
+        <div class="row">
+            <div class="col s4">
+                <div class="card" id="slot1">
+                    <div class="card-content">
+                        <span class="card-title">test</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col s4">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">test</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col s4">
+                <div class="card">
+                    <div class="card-content">
+
+                    <span class="card-title">test</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+
+    {% for user_aspect in profile.user_aspects %}
+    <div class="col s12 m4">
+        <div class="card blue clickable">
+            <div class="card-content">
+                <span class="card-title">{{user_aspect.aspect.name}}</span>
+                <p>{{user_aspect.aspect.description}}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+ $( document ).ready(function() {
+     $('.clickable').click(function() {
+         $('.clickable').removeClass("darken-3");
+         $(this).addClass("darken-3");
+         console.log($(this).find('.card-title').text());
+         var title = $(this).find('.card-title').text();
+         $('#slot1').find(".card-title").text(title);
+         $('#slot1').addClass("blue");
+     });
+ });
+</script>

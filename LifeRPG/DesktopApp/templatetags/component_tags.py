@@ -22,3 +22,23 @@ def hearts(context):
     heart_range = range(profile.hearts)
     empty_range = range(3-profile.hearts)
     return{'heart_range': heart_range, 'empty_range': empty_range}
+
+
+@register.inclusion_tag('components/aspects.html', takes_context=True)
+def aspects(context):
+    return context
+
+
+@register.inclusion_tag('components/focus.html', takes_context=True)
+def focus(context):
+    return context
+
+
+@register.inclusion_tag('components/levelup_form.html', takes_context=True)
+def levelup_form(context):
+    return context
+
+
+@register.inclusion_tag('components/stats_form.html', takes_context=True)
+def stats_form(context):
+    return context

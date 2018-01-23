@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-# Create your models here.
 class Mission(models.Model):
     image = models.CharField(max_length=200)
     title = models.CharField(max_length=50)
@@ -35,19 +34,25 @@ class Profile(models.Model):
     hearts = models.IntegerField()
 
     @property
-    def aspects(self):
+    def user_aspects(self):
+        user_aspects = UserAspect.objects.filter(user=self.user)
+        return user_aspects
 
-        return list(self.friends.all())
+    @property
+    def user_focus(self):
+        user_focus = UserFocus.objects.filter(user=self.user,
+                                              level=self.level)
+        return user_focus
 
 
-class UserAspects(models.Model):
+class UserAspect(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     aspect = models.ForeignKey(Aspect, on_delete=models.CASCADE)
     points = models.IntegerField()
 
 
-class UserLevelUps(models.Model):
+class UserFocus(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    levelup_time = models.DateField()
     level = models.IntegerField()
     aspect = models.ForeignKey(Aspect, null=True, on_delete=models.SET_NULL)
+    slot = models.IntegerField()
