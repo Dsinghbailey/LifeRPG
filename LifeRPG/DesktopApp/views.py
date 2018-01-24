@@ -37,7 +37,7 @@ def register_view(request):
 
 
 @login_required
-def tutorial(request):
+def create_profile(request):
     if not Profile.objects.filter(user=request.user).exists():
         Profile.objects.create(user=request.user, level=0,
                                xp=0, hearts=3)
@@ -47,13 +47,20 @@ def tutorial(request):
                                       points=0)
     profile = Profile.objects.get(user=request.user)
     context = {'profile': profile}
+    return render(request, 'create_profile.html', context)
+
+
+@login_required
+def tutorial(request):
+    profile = Profile.objects.get(user=request.user)
+    context = {'profile': profile}
     return render(request, 'tutorial.html', context)
 
 
 @login_required
 def profile(request):
     if not Profile.objects.filter(user=request.user).exists():
-        return redirect(tutorial)
+        return redirect(create_profile)
     profile = Profile.objects.get(user=request.user)
     context = {'profile': profile}
     return render(request, 'profile.html', context=context)
@@ -68,4 +75,6 @@ def levelup(request):
 
 @login_required
 def missions(request):
+    if not Profile.objects.filter(user=request.user).exists():
+        return redirect(create_profile)
     return render(request, 'missions.html', {'missions': range(5)})

@@ -24,8 +24,8 @@ def hearts(context):
     return{'heart_range': heart_range, 'empty_range': empty_range}
 
 
-@register.inclusion_tag('components/aspects.html', takes_context=True)
-def aspects(context):
+@register.inclusion_tag('components/stats.html', takes_context=True)
+def stats(context):
     return context
 
 
@@ -36,9 +36,4 @@ def focus(context):
 
 @register.inclusion_tag('components/levelup_form.html', takes_context=True)
 def levelup_form(context):
-    return context
-
-
-@register.inclusion_tag('components/stats_form.html', takes_context=True)
-def stats_form(context):
     return context

@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^login', auth_views.login,
         {'template_name': 'login.html'}, name='login'),
     url(r'^logout', core_views.logout_view, name='logout'),
+    url(r'^create_profile', core_views.create_profile, name='create_profile'),
     url(r'^tutorial', core_views.tutorial, name='tutorial'),
     url(r'^profile', core_views.profile, name='profile'),
     url(r'^levelup', core_views.levelup, name='levelup'),

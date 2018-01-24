@@ -115,7 +115,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Redirects
-LOGIN_REDIRECT_URL = 'profile'
+LOGIN_REDIRECT_URL = 'missions'
 
 
 # Static files (CSS, JavaScript, Images)
