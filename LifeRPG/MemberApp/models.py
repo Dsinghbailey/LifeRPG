@@ -20,7 +20,7 @@ class MissionAspects(models.Model):
     aspect = models.ForeignKey(Aspect, on_delete=models.CASCADE)
 
 
-class UserMissionRatings(models.Model):
+class UserMissionRating(models.Model):
     log_time = models.DateField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE)

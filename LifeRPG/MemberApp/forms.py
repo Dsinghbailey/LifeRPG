@@ -2,7 +2,7 @@ from django import forms
 
 
 class CreateProfileForm(forms.Form):
-    choices = [('1', 1), ('2', 2), ('3', 3), ('4', 4), ('5', 5)]
+    choices = [(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')]
     questions = [
         "I feel the sleep I get is adequate and I wake feeling rested.",
         "I eat regular nutritious meals that give me the energy I need to get through the day.",

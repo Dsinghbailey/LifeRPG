@@ -16,17 +16,18 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from MemberApp import views as member_views
+from VisitorApp import views as visitor_views
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
 
 
 urlpatterns = [
-    url(r'^$', member_views.home, name='home'),
-    url(r'^contact', member_views.contact, name='contact'),
+    url(r'^$', visitor_views.home, name='home'),
+    url(r'^contact', visitor_views.contact, name='contact'),
     url(r'^about',
         TemplateView.as_view(template_name='about.html'),
         name='about'),
-    url(r'^register', member_views.register_view, name='register'),
+    url(r'^register', visitor_views.register_view, name='register'),
     url(r'^login', auth_views.login,
         {'template_name': 'login.html'}, name='login'),
     url(r'^logout', member_views.logout_view, name='logout'),
