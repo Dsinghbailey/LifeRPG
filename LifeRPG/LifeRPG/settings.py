@@ -116,6 +116,7 @@ USE_TZ = True
 
 # Redirects
 LOGIN_REDIRECT_URL = 'missions'
+LOGIN_URL = 'login'
 
 
 # Static files (CSS, JavaScript, Images)

@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .models import Profile, Aspect, UserAspect
+from .forms import CreateProfileForm
 
 
 def home(request):
@@ -43,10 +44,19 @@ def create_profile(request):
                                xp=0, hearts=3)
         aspects = Aspect.objects.all()
         for aspect in aspects:
-            UserAspect.objects.create(user=request.user, aspect=aspect,
+            UserAspect.objects.create(user=request.user,
+                                      aspect=aspect,
                                       points=0)
     profile = Profile.objects.get(user=request.user)
-    context = {'profile': profile}
+    if request.method == 'POST':
+        print('hey2')
+        form = CreateProfileForm(request.POST)
+        if form.is_valid():
+            return redirect('tutorial')
+    else:
+        print('hey')
+        form = CreateProfileForm()
+    context = {'profile': profile, 'form': form}
     return render(request, 'create_profile.html', context)
 
 
