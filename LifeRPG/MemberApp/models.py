@@ -20,15 +20,33 @@ class MissionAspects(models.Model):
     aspect = models.ForeignKey(Aspect, on_delete=models.CASCADE)
 
 
-class UserMissionRating(models.Model):
+class UserMissionRatings(models.Model):
     log_time = models.DateField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE)
     rating = models.IntegerField()
 
 
+class IntakeQuestion(models.Model):
+    aspect = models.ForeignKey(Aspect, null=True, on_delete=models.SET_NULL)
+    question = models.CharField(max_length=200)
+
+
+class UserIntakeQuestion(models.Model):
+    log_time = models.DateField()
+    question = models.ForeignKey(IntakeQuestion, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    value = models.IntegerField(default=0)
+
+    @property
+    def aspect(self):
+        aspect = self.question.aspect
+        return aspect
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    created = models.IntegerField(default=0)
     level = models.IntegerField()
     xp = models.IntegerField()
     hearts = models.IntegerField()

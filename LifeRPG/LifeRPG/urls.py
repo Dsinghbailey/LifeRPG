@@ -28,13 +28,21 @@ urlpatterns = [
         TemplateView.as_view(template_name='about.html'),
         name='about'),
     url(r'^register', visitor_views.register_view, name='register'),
+
+
     url(r'^login', auth_views.login,
         {'template_name': 'login.html'}, name='login'),
     url(r'^logout', member_views.logout_view, name='logout'),
-    url(r'^create_profile', member_views.create_profile, name='create_profile'),
+    url(r'^create_profile',
+        member_views.create_profile, name='create_profile'),
     url(r'^tutorial', member_views.tutorial, name='tutorial'),
     url(r'^profile', member_views.profile, name='profile'),
     url(r'^levelup', member_views.levelup, name='levelup'),
     url(r'^missions', member_views.missions, name='missions'),
+    url(r'^mission_review',
+        member_views.mission_review, name='mission_review'),
+
+
+
     url(r'^admin/', admin.site.urls),
 ]
