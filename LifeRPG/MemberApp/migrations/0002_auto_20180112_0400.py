@@ -21,7 +21,7 @@ def load_aspects_from_csv(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('DesktopApp', '0001_initial'),
+        ('MemberApp', '0001_initial'),
     ]
 
     operations = [

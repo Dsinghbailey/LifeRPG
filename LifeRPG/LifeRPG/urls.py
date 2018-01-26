@@ -15,25 +15,25 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from DesktopApp import views as core_views
+from MemberApp import views as member_views
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
 
 
 urlpatterns = [
-    url(r'^$', core_views.home, name='home'),
-    url(r'^contact', core_views.contact, name='contact'),
+    url(r'^$', member_views.home, name='home'),
+    url(r'^contact', member_views.contact, name='contact'),
     url(r'^about',
         TemplateView.as_view(template_name='about.html'),
         name='about'),
-    url(r'^register', core_views.register_view, name='register'),
+    url(r'^register', member_views.register_view, name='register'),
     url(r'^login', auth_views.login,
         {'template_name': 'login.html'}, name='login'),
-    url(r'^logout', core_views.logout_view, name='logout'),
-    url(r'^create_profile', core_views.create_profile, name='create_profile'),
-    url(r'^tutorial', core_views.tutorial, name='tutorial'),
-    url(r'^profile', core_views.profile, name='profile'),
-    url(r'^levelup', core_views.levelup, name='levelup'),
-    url(r'^missions', core_views.missions, name='missions'),
+    url(r'^logout', member_views.logout_view, name='logout'),
+    url(r'^create_profile', member_views.create_profile, name='create_profile'),
+    url(r'^tutorial', member_views.tutorial, name='tutorial'),
+    url(r'^profile', member_views.profile, name='profile'),
+    url(r'^levelup', member_views.levelup, name='levelup'),
+    url(r'^missions', member_views.missions, name='missions'),
     url(r'^admin/', admin.site.urls),
 ]
