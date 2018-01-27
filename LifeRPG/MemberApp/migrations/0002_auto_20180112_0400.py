@@ -5,7 +5,6 @@ from ..models import Aspect, IntakeQuestion, Mission, MissionAspect
 from django.db import migrations
 import csv
 import os
-import pdb
 
 
 def load_aspects_from_csv(apps, schema_editor):
@@ -14,8 +13,11 @@ def load_aspects_from_csv(apps, schema_editor):
         reader = csv.DictReader(csvfile)
         for row in reader:
             name = row['name'].lower()
+            color = row['color'].lower()
             description = row['description']
-            new_aspect = Aspect(name=name, description=description)
+            new_aspect = Aspect(name=name,
+                                color=color,
+                                description=description)
             new_aspect.save()
 
 
