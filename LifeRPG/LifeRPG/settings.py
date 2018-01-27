@@ -23,9 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'yoh!26u+jb2a!i&kjw*@&+$ubfhnsd-v3-*a6h71xqvjt3dc!c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = False
+# ALLOWED_HOSTS = ['*']
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -37,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'DesktopApp'
+    'MemberApp',
+    'VisitorApp'
 ]
 
 MIDDLEWARE = [
@@ -55,7 +57,7 @@ ROOT_URLCONF = 'LifeRPG.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,3 +125,4 @@ LOGIN_URL = 'login'
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)

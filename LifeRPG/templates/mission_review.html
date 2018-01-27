@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Mission Review{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>Mission Review</h3>
+
+    <form action="" method="post">
+    {% csrf_token %}
+        <table class="bordered">
+            <th> </th>
+            <th>Bad</th>
+            <th>Alright</th>
+            <th>OK</th>
+            <th>Good</th>
+            <th>Great</th>
+                {% for field in form %}
+                <tr>
+                    <td>
+                        <p>{{ field.label }}</p>
+                        {% for error in field.errors %}
+                        <p class="red-text">{{ error }}</p>
+                        {% endfor %}
+                    </td>
+                        {% for value, text in field.field.choices %}
+                        <td>
+                        <input name="{{field.name}}" type="radio" value="{{value}}" id="{{field.name}}{{text}}">
+                        <label for="{{field.name}}{{text}}"></label>
+                        </td>
+                        {% endfor %}
+                </tr>
+                {% endfor %}
+        </table>
+        <br><br>
+        <div class="center">
+            <button type="submit" class="btn-large waves-effect waves-light purple center">
+                Mission Accomplished
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

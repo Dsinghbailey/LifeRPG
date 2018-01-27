@@ -11,7 +11,7 @@
                 {% for user_aspect in profile.user_aspects %}
                 <tr>
                     <td><h5>{{user_aspect.aspect.name}}</h5></td>
-                    <td><h5>0</h5></td>
+                    <td><h5>{{user_aspect.points}}</h5></td>
                 </tr>
                 {% endfor %}
             </tbody>
