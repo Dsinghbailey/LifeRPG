@@ -5,6 +5,9 @@
 {% block content %}
 <div class="container">
     <h3>Create Profile</h3>
+    
+    {% load component_tags %}
+    {% help_box title='A Quick Quiz' content='To create your profile answer each question below. Your answers will determine where you start and what path you will pursue.' %}
 
 <form action="" method="post">
     {% csrf_token %}

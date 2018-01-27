@@ -7,7 +7,7 @@ class Mission(models.Model):
     title = models.CharField(max_length=50)
     content = models.CharField(max_length=200)
     #  Unused
-    science = models.CharField(max_length=200)
+    science = models.CharField(max_length=200, null=True)
 
 
 class Aspect(models.Model):

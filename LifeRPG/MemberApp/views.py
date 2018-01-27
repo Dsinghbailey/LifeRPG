@@ -2,10 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .models import Profile, Aspect, UserAspect, IntakeQuestion,\
-    UserIntakeQuestion
-from .forms import CreateProfileForm
+    UserIntakeQuestion, Mission, UserMissionRatings
+from .forms import CreateProfileForm, MissionRatingForm
 import datetime
-import pdb
 
 
 def logout_view(request):
@@ -78,8 +77,26 @@ def missions(request):
 
 @login_required
 def mission_review(request):
-    check_profile_redirect(request)
-    return render(request, 'mission_review.html')
+    if check_profile_redirect(request):
+        return redirect('create_profile')
+    if request.method == 'POST':
+        form = MissionRatingForm(request.POST)
+        if form.is_valid():
+            # Add answers to UserIntakeQuestion
+            now = datetime.datetime.now()
+            rating = list(form.cleaned_data.values())[0]
+            mission = Mission(image='d', title='d', content='d', science='f')
+            mission.save()
+            mission_rating = UserMissionRatings(log_time=now,
+                                                user=request.user,
+                                                rating=rating,
+                                                mission=mission)
+            mission_rating.save()
+            return redirect('missions')
+    else:
+        form = MissionRatingForm()
+    context = {'profile': profile, 'form': form}
+    return render(request, 'mission_review.html', context)
 
 
 #  Utility functions
