@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import(Aspect, UserAspect, IntakeQuestion, UserIntakeQuestion,
-                    Mission, UserMissionRating, MissionAspect)
+                    Mission, UserMissionRating, MissionAspect, Profile)
 
 
 class AspectAdmin(admin.ModelAdmin):
@@ -20,7 +20,7 @@ class IntakeQuestionAdmin(admin.ModelAdmin):
 
 
 class UserMissionRatingAdmin(admin.ModelAdmin):
-    list_display = ['user', 'log_time' 'mission_title',
+    list_display = ['user', 'log_time', 'mission_title',
                     'rating']
 
     def mission_title(self, obj):
@@ -41,10 +41,11 @@ class MissionAspectAdmin(admin.ModelAdmin):
         return obj.aspect.name
 
 
+admin.site.register(Profile)
 admin.site.register(Aspect, AspectAdmin)
 admin.site.register(UserAspect, UserAspectAdmin)
 admin.site.register(IntakeQuestion, IntakeQuestionAdmin)
 admin.site.register(UserIntakeQuestion)
-admin.site.register(UserMissionRating,)
+admin.site.register(UserMissionRating, UserMissionRatingAdmin)
 admin.site.register(Mission, MissionAdmin)
 admin.site.register(MissionAspect, MissionAspectAdmin)

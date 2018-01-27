@@ -8,9 +8,9 @@
     <p> You still need to do a mission today</p>
     <div class="row">
         {% load component_tags %}
+        <div class="col s12 m6">
         {% for mission in missions %}
         {% autoescape off %}
-        <div class="col s12 m6">
             <div class="card horizontal">
                 <div class="card-image">
                     <img src="https://lorempixel.com/100/190/nature/6">
@@ -25,13 +25,17 @@
                         </p>
                     </div>
                     <div class="card-action">
-                        <a href="/mission-review">Mark as Complete</a>
+                        <a href="/mission-review?id={{mission.id}}">Mark as Complete</a>
                     </div>
                 </div>
             </div>
+        {% if forloop.counter0 == half %}
         </div>
-        {% endautoescape %} 
-        {% endfor %}
+        <div class="col s12 m6">
+       {% endif %}
+       {% endautoescape %}
+       {% endfor %}
+        </div>
     </div>
 </div>
 

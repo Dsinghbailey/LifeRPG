@@ -8,6 +8,7 @@ from .datascience import get_user_missions
 import datetime
 
 
+# Views
 def logout_view(request):
     logout(request)
     return redirect('home')
@@ -15,10 +16,14 @@ def logout_view(request):
 
 @login_required
 def create_profile(request):
+    if(Profile.objects.filter(user=request.user).exists()):
+        profile = Profile.objects.get(user=request.user)
+        if(profile.created == 1):
+            return redirect('tutorial')
+
     init_profile(request)
     profile = Profile.objects.get(user=request.user)
-    if(profile.created == 1):
-        return redirect('tutorial')
+
     if request.method == 'POST':
         form = CreateProfileForm(request.POST)
         if form.is_valid():
@@ -74,27 +79,39 @@ def missions(request):
     if check_profile_redirect(request):
             return redirect('create_profile')
     missions = get_user_missions()
+    half = int(len(missions)/2)
     return render(request, 'missions.html',
-                  {'missions': missions})
+                  {'missions': missions,
+                   'half': half})
 
 
 @login_required
 def mission_review(request):
     if check_profile_redirect(request):
         return redirect('create_profile')
+    profile = Profile.objects.get(user=request.user)
     if request.method == 'POST':
         form = MissionRatingForm(request.POST)
         if form.is_valid():
             # Add answers to UserIntakeQuestion
             now = datetime.datetime.now()
             rating = list(form.cleaned_data.values())[0]
-            mission = Mission(image='d', title='d', content='d', science='f')
+            try:
+                mission_id = request.GET["id"]
+            except:
+                return redirect('missions')
+            mission = Mission.objects.get(id=mission_id)
             mission.save()
+            # Save MissionRating
             mission_rating = UserMissionRating(log_time=now,
                                                user=request.user,
                                                rating=rating,
                                                mission=mission)
             mission_rating.save()
+            # Add xp to profile
+            # TODO: should xp change by mission?
+            profile.xp += profile.hearts
+            profile.save()
             return redirect('missions')
     else:
         form = MissionRatingForm()
@@ -112,10 +129,14 @@ def check_profile_redirect(request):
 
 def init_profile(request):
         if not Profile.objects.filter(user=request.user).exists():
-            Profile.objects.create(user=request.user, level=0,
-                                   xp=0, hearts=3)
-            aspects = Aspect.objects.all()
-            for aspect in aspects:
+            Profile.objects.create(user=request.user,
+                                   level=0,
+                                   xp=0,
+                                   hearts=3)
+        aspects = Aspect.objects.all()
+        for aspect in aspects:
+            if not UserAspect.objects.filter(user=request.user,
+                                             aspect=aspect).exists():
                 UserAspect.objects.create(user=request.user,
                                           aspect=aspect,
                                           points=0)

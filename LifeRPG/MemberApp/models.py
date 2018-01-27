@@ -3,15 +3,16 @@ from django.contrib.auth.models import User
 
 
 class Mission(models.Model):
-    image = models.CharField(max_length=200)
+    image = models.CharField(max_length=200, null=True)
     title = models.CharField(max_length=50)
-    content = models.CharField(max_length=200, null=True)
+    content = models.CharField(max_length=200)
     #  Unused
     science = models.CharField(max_length=200, null=True)
 
 
 class Aspect(models.Model):
     name = models.CharField(max_length=50)
+    color = models.CharField(max_length=200, default='white')
     description = models.CharField(max_length=200, null=True)
 
 

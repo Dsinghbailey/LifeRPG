@@ -10,7 +10,8 @@ Class-based views
     1. Add an import:  from other_app.views import Home
     2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
 Including another URLconf
-    1. Import the   2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
+    1. Import the include() function: from django.conf.urls import url, include
+    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
 from django.contrib import admin
@@ -30,9 +31,9 @@ urlpatterns = [
 
 
     url(r'^login', auth_views.login,
-        {'template-name': 'login.html'}, name='login'),
+        {'template_name': 'login.html'}, name='login'),
     url(r'^logout', member_views.logout_view, name='logout'),
-    url(r'^create-profile',
+    url(r'^create_profile',
         member_views.create_profile, name='create_profile'),
     url(r'^tutorial', member_views.tutorial, name='tutorial'),
     url(r'^profile', member_views.profile, name='profile'),
