@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Mission(models.Model):
     image = models.CharField(max_length=200)
     title = models.CharField(max_length=50)
-    content = models.CharField(max_length=200)
+    content = models.CharField(max_length=200, null=True)
     #  Unused
     science = models.CharField(max_length=200, null=True)
 
@@ -15,12 +15,12 @@ class Aspect(models.Model):
     description = models.CharField(max_length=200, null=True)
 
 
-class MissionAspects(models.Model):
+class MissionAspect(models.Model):
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE)
     aspect = models.ForeignKey(Aspect, on_delete=models.CASCADE)
 
 
-class UserMissionRatings(models.Model):
+class UserMissionRating(models.Model):
     log_time = models.DateField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE)

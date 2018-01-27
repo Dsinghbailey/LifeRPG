@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .models import Profile, Aspect, UserAspect, IntakeQuestion,\
-    UserIntakeQuestion, Mission, UserMissionRatings
+    UserIntakeQuestion, Mission, UserMissionRating
 from .forms import CreateProfileForm, MissionRatingForm
+from .datascience import get_user_missions
 import datetime
 
 
@@ -72,7 +73,9 @@ def levelup(request):
 def missions(request):
     if check_profile_redirect(request):
             return redirect('create_profile')
-    return render(request, 'missions.html', {'missions': range(5)})
+    missions = get_user_missions()
+    return render(request, 'missions.html',
+                  {'missions': missions})
 
 
 @login_required
@@ -87,10 +90,10 @@ def mission_review(request):
             rating = list(form.cleaned_data.values())[0]
             mission = Mission(image='d', title='d', content='d', science='f')
             mission.save()
-            mission_rating = UserMissionRatings(log_time=now,
-                                                user=request.user,
-                                                rating=rating,
-                                                mission=mission)
+            mission_rating = UserMissionRating(log_time=now,
+                                               user=request.user,
+                                               rating=rating,
+                                               mission=mission)
             mission_rating.save()
             return redirect('missions')
     else:
