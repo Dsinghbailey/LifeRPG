@@ -5,7 +5,6 @@ from .models import Profile, Aspect, UserAspect, IntakeQuestion,\
     UserIntakeQuestion, Mission, UserMissionRating, UserFocus
 from .forms import CreateProfileForm, MissionRatingForm, LevelUpForm
 from .datascience import get_user_missions
-import datetime
 
 MAX_XP = 100
 MISSIONS_PER_DAY = 5
@@ -26,24 +25,21 @@ def create_profile(request):
 
     init_profile(request)
     profile = Profile.objects.get(user=request.user)
-
     if request.method == 'POST':
         form = CreateProfileForm(request.POST)
         if form.is_valid():
             # Add answers to UserIntakeQuestion
             answers = list(form.cleaned_data.values())
             questions = IntakeQuestion.objects.all()
-            now = datetime.datetime.now()
             for i, question in enumerate(questions):
                 user_reply = UserIntakeQuestion(user=request.user,
                                                 question=question,
-                                                value=answers[i],
-                                                log_time=now)
+                                                value=answers[i])
                 user_reply.save()
             user_replies_to_stats(request.user)
             profile.created = 1
             profile.save()
-            return redirect('tutorial')
+            return redirect('levelup')
     else:
         form = CreateProfileForm()
     context = {'profile': profile, 'form': form}
@@ -91,7 +87,12 @@ def levelup(request):
                                        aspect=aspect,
                                        slot=slot)
                 user_focus.save()
-            return redirect('profile')
+
+            # If first level show tutorial
+            if profile.level == 1:
+                return redirect('tutorial')
+            else:
+                return redirect('profile')
     else:
         form = LevelUpForm()
     context = {'profile': profile, 'form': form}
@@ -116,7 +117,6 @@ def mission_review(request):
         form = MissionRatingForm(request.POST)
         if form.is_valid():
             # Add answers to UserIntakeQuestion
-            now = datetime.datetime.now()
             rating = list(form.cleaned_data.values())[0]
             try:
                 mission_id = request.GET["id"]
@@ -125,8 +125,7 @@ def mission_review(request):
             mission = Mission.objects.get(id=mission_id)
             mission.save()
             # Save MissionRating
-            mission_rating = UserMissionRating(log_time=now,
-                                               user=request.user,
+            mission_rating = UserMissionRating(user=request.user,
                                                rating=rating,
                                                mission=mission)
             mission_rating.save()
@@ -156,7 +155,8 @@ def init_profile(request):
         if not Profile.objects.filter(user=request.user).exists():
             Profile.objects.create(user=request.user,
                                    level=0,
-                                   xp=0,
+                                   # Start with levelup
+                                   xp=MAX_XP,
                                    hearts=3)
         aspects = Aspect.objects.all()
         for aspect in aspects:

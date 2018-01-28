@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
 
 
 class Mission(models.Model):
@@ -22,7 +23,7 @@ class MissionAspect(models.Model):
 
 
 class UserMissionRating(models.Model):
-    log_time = models.DateField()
+    log_time = models.DateTimeField(default=datetime.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE)
     rating = models.IntegerField()
@@ -34,7 +35,7 @@ class IntakeQuestion(models.Model):
 
 
 class UserIntakeQuestion(models.Model):
-    log_time = models.DateField()
+    log_time = models.DateTimeField(default=datetime.now)
     question = models.ForeignKey(IntakeQuestion, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     value = models.IntegerField(default=0)
@@ -46,6 +47,7 @@ class UserIntakeQuestion(models.Model):
 
 
 class Profile(models.Model):
+    log_time = models.DateTimeField(default=datetime.now)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     created = models.IntegerField(default=0)
     level = models.IntegerField()
@@ -75,6 +77,7 @@ class UserAspect(models.Model):
 
 
 class UserFocus(models.Model):
+    log_time = models.DateTimeField(default=datetime.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     level = models.IntegerField()
     aspect = models.ForeignKey(Aspect, null=True, on_delete=models.SET_NULL)

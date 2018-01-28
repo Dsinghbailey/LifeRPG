@@ -19,6 +19,7 @@
         <tr>
             <th></th>
             <th></th>
+            <th></th>
             <th>Never</th>
             <th>Rarely</th>
             <th>Sometimes</th>
@@ -28,14 +29,16 @@
 
     {% for field in form %}
         <tr>
-            <td><p>{{ field.label }}</p>
+            <td class="{{field.help_text}}">  &nbsp; </td>
+            <td
+                <p>{{ field.label }}</p>
                 {% for error in field.errors %}
                     <p class="red-text">{{ error }}</p>
                 {% endfor %}
             </td>
             <td>  &nbsp;&nbsp; </td>
             {% for value, text in field.field.choices %}
-            <td class="center">
+            <td class="center ">
                 <input name="{{field.name}}" type="radio" value="{{value}}" id="{{field.name}}{{text}}">
                 <label for="{{field.name}}{{text}}"></label>
             </td>
@@ -53,3 +56,4 @@
 </form>
 <div>
 {% endblock %}
+ 

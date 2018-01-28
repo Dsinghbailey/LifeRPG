@@ -1,4 +1,11 @@
 <div class="row">
+    {% for field in form %}
+    {% for error in field.errors %}
+    <p class="red-text">{{ error }}</p>
+    {% endfor %}
+    {% endfor %}
+
+
     <div class="col m10 offset-m1 s12 grey lighten-4">
         <span>Level Focus</span>
         <div class="row">
@@ -41,11 +48,7 @@
 <br>
 <form action="" method="post">
     {% csrf_token %}
-
     {% for field in form %}
-    {% for error in field.errors %}
-    <p class="red-text">{{ error }}</p>
-    {% endfor %}
     {{field.as_hidden }}
     {% endfor %}
     <br>

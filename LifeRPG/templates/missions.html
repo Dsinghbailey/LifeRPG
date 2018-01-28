@@ -5,34 +5,30 @@
 {% block content %}
 <div class="container">
     <h3>Daily Missions</h3>
-    <p> You still need to do a mission today</p>
+    {% load component_tags %}
+    {% help_box title='' content='You still need to do a mission today' %}
     <div class="row">
         {% load component_tags %}
-        {% for mission in missions %}
-        {% autoescape off %}
         <div class="col s12">
-            <div class="card ">
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <span class="card-title">
-                            {{mission.title}}
-                        </span>
-                        <p>
-                            {{mission.content}}
-                        </p>
+            <ul class="collapsible" data-collapsible="accordion">
+            {% for mission in missions %}
+            {% autoescape off %}
+                <li>
+                    <div class="collapsible-header">
+                       <h5> {{mission.title}} <h5>
                     </div>
-                    <div class="card-action">
-                        <a href="/mission-review?id={{mission.id}}">Mark as Complete</a>
-                    </div>
-                </div>
-            </div>
+                    <div class="collapsible-body"><span>
+                        {{mission.content}}
+                        <br>
+                        <div class="center">
+                            <a href="/mission-review?id={{mission.id}}">Mark as Complete</a>
+                        </div>
+                    </span></div>
+                </li>
+            {% endautoescape %}
+                {% endfor %}
+            </ul>
         </div>
-        {% if forloop.counter|divisibleby:2 %}
-    </div>
-    <div class="row">
-        {% endif %}
-        {% endautoescape %}
-        {% endfor %}
     </div>
 </div>
 </div>

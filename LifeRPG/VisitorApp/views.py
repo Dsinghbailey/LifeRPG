@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect
-from MemberApp.views import profile
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 
 
 def home(request):
     if request.user.is_authenticated():
-        return redirect(profile)
+        return redirect('missions')
     return render(request, 'index.html', context={})
 
 
@@ -27,4 +26,3 @@ def register_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
-
