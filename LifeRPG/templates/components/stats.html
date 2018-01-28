@@ -1,8 +1,10 @@
 <div class="row">
-    <div class="col s12 m10  offset-m1 card grey lighten-4" ">
-        <table class="bordered">
+    <div class="col s12 m10  offset-m1 card grey lighten-4" >
+        Stats
+        <table class="bordered" >
             <thead>
                 <tr>
+                    <th> </th>
                     <th> Aspect </th>
                     <th> Points </th>
                 </tr>
@@ -10,6 +12,7 @@
             <tbody>
                 {% for user_aspect in profile.user_aspects %}
                 <tr>
+                    <td class='{{user_aspect.aspect.color}}'> </td>
                     <td><h5>{{user_aspect.aspect.name}}</h5></td>
                     <td><h5>{{user_aspect.points}}</h5></td>
                 </tr>

@@ -2,10 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .models import Profile, Aspect, UserAspect, IntakeQuestion,\
-    UserIntakeQuestion, Mission, UserMissionRating
-from .forms import CreateProfileForm, MissionRatingForm
+    UserIntakeQuestion, Mission, UserMissionRating, UserFocus
+from .forms import CreateProfileForm, MissionRatingForm, LevelUpForm
 from .datascience import get_user_missions
 import datetime
+
+MAX_XP = 100
+MISSIONS_PER_DAY = 5
 
 
 # Views
@@ -49,7 +52,7 @@ def create_profile(request):
 
 @login_required
 def tutorial(request):
-    if check_profile_redirect(request):
+    if create_profile_redirect(request):
         return redirect('create_profile')
     profile = Profile.objects.get(user=request.user)
     context = {'profile': profile}
@@ -58,7 +61,7 @@ def tutorial(request):
 
 @login_required
 def profile(request):
-    if check_profile_redirect(request):
+    if create_profile_redirect(request):
             return redirect('create_profile')
     profile = Profile.objects.get(user=request.user)
     context = {'profile': profile}
@@ -67,27 +70,46 @@ def profile(request):
 
 @login_required
 def levelup(request):
-    if check_profile_redirect(request):
+    if create_profile_redirect(request):
         return redirect('create_profile')
     profile = Profile.objects.get(user=request.user)
-    context = {'profile': profile, 'max_points': 3}
+    if profile.xp < MAX_XP:
+        redirect('profile')
+    if request.method == 'POST':
+        form = LevelUpForm(request.POST)
+        if form.is_valid():
+            # level up
+            profile.level += 1
+            profile.xp = 0
+            profile.save()
+            # save user_focus
+            focii = list(form.cleaned_data.values())
+            for slot, focus in enumerate(focii):
+                aspect = Aspect.objects.get(name=focus)
+                user_focus = UserFocus(user=request.user,
+                                       level=profile.level,
+                                       aspect=aspect,
+                                       slot=slot)
+                user_focus.save()
+            return redirect('profile')
+    else:
+        form = LevelUpForm()
+    context = {'profile': profile, 'form': form}
     return render(request, 'levelup.html', context=context)
 
 
 @login_required
 def missions(request):
-    if check_profile_redirect(request):
+    if create_profile_redirect(request):
             return redirect('create_profile')
-    missions = get_user_missions()
-    half = int(len(missions)/2)
+    missions = get_user_missions(MISSIONS_PER_DAY)
     return render(request, 'missions.html',
-                  {'missions': missions,
-                   'half': half})
+                  {'missions': missions})
 
 
 @login_required
 def mission_review(request):
-    if check_profile_redirect(request):
+    if create_profile_redirect(request):
         return redirect('create_profile')
     profile = Profile.objects.get(user=request.user)
     if request.method == 'POST':
@@ -112,7 +134,10 @@ def mission_review(request):
             # TODO: should xp change by mission?
             profile.xp += profile.hearts
             profile.save()
-            return redirect('missions')
+            if profile.xp < MAX_XP:
+                return redirect('missions')
+            else:
+                return redirect('levelup')
     else:
         form = MissionRatingForm()
     context = {'profile': profile, 'form': form}
@@ -120,7 +145,7 @@ def mission_review(request):
 
 
 #  Utility functions
-def check_profile_redirect(request):
+def create_profile_redirect(request):
         if Profile.objects.filter(user=request.user).exists():
             return False
         else:

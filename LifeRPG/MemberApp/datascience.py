@@ -2,10 +2,7 @@ from .models import Mission
 import numpy as np
 
 
-MISSIONS_PER_DAY = 5
-
-
-def get_user_missions(num=MISSIONS_PER_DAY):
+def get_user_missions(num):
     missions = get_rand_missions(num)
     return missions
 

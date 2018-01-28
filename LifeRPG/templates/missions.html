@@ -4,17 +4,14 @@
 
 {% block content %}
 <div class="container">
-    <h3>Today's Missions</h3>
+    <h3>Daily Missions</h3>
     <p> You still need to do a mission today</p>
     <div class="row">
         {% load component_tags %}
-        <div class="col s12 m6">
         {% for mission in missions %}
         {% autoescape off %}
-            <div class="card horizontal">
-                <div class="card-image">
-                    <img src="https://lorempixel.com/100/190/nature/6">
-                </div>
+        <div class="col s12">
+            <div class="card ">
                 <div class="card-stacked">
                     <div class="card-content">
                         <span class="card-title">
@@ -29,14 +26,15 @@
                     </div>
                 </div>
             </div>
-        {% if forloop.counter0 == half %}
         </div>
-        <div class="col s12 m6">
-       {% endif %}
-       {% endautoescape %}
-       {% endfor %}
-        </div>
+        {% if forloop.counter|divisibleby:2 %}
     </div>
+    <div class="row">
+        {% endif %}
+        {% endautoescape %}
+        {% endfor %}
+    </div>
+</div>
 </div>
 
 {% endblock %}

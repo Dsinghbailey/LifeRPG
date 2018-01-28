@@ -18,10 +18,14 @@ class CreateProfileForm(forms.Form):
 
 
 class MissionRatingForm(forms.Form):
-    rating = forms.ChoiceField(label='To finish the mission please rate it from 1 to 5.',
+    rating = forms.ChoiceField(label='To finish the mission please rate it.',
                                widget=forms.RadioSelect(
                                 attrs={'class': "with-gap"}),
                                choices=choices,
                                required=True)
 
-    
+
+class LevelUpForm(forms.Form):
+    slot1 = forms.CharField(required=True)
+    slot2 = forms.CharField(required=True)
+    slot3 = forms.CharField(required=True)

@@ -61,7 +61,11 @@ class Profile(models.Model):
     def user_focus(self):
         user_focus = UserFocus.objects.filter(user=self.user,
                                               level=self.level)
-        return user_focus
+        aspects = []
+        for focus in user_focus:
+            aspect = focus.aspect
+            aspects.append(aspect)
+        return aspects
 
 
 class UserAspect(models.Model):

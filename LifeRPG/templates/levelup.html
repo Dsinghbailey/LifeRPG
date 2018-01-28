@@ -6,18 +6,10 @@
 <div class="container">
     <h3>Level Up</h3>
     <br>
-    <div class="row">
         {% load component_tags %}
-        {% help_box title='Great Job!' content='Choose up to 3 aspects of your life to improve on during the journey to your next level.' %}
-    </div>
+        {% help_box title='Great Job!' content='Choose up to 3 aspects of your life to improve on during your journey to your next level.' %}
     <br>
-    <div class="row">
-        {% levelup_form %}
-    </div>
-    <br>
-    <div class="row center">
-        <a href="/profile" id="download-button" class="btn-large waves-effect waves-light purple">Complete</a>
-    </div>
+    {% levelup_form %}
 </div>
 
 {% endblock %}

@@ -2,31 +2,15 @@
     <div class="col m10 offset-m1 s12 grey lighten-4">
         <span>Level Focus</span>
         <div class="row">
+            {% for focus in profile.user_focus  %}
             <div class="col m4 s12 ">
-                <div class="card">
+                <div class="card {{focus.color}}">
                     <div class="card-content">
-
-                        <span class="card-title">slot1</span>
+                        <span class="card-title">{{focus.name}}</span>
                     </div>
                 </div>
             </div>
-            <div class="col m4 s12">
-                <div class="card">
-                    
-                    <div class="card-content">
-
-                        <span class="card-title">slot2</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col m4 s12">
-                <div class="card">
-                    <div class="card-content">
-
-                        <span class="card-title">slot3</span>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
