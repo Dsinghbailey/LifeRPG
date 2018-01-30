@@ -6,10 +6,9 @@ from django.db import migrations
 import csv
 import os
 
-
 def load_aspects_from_csv(apps, schema_editor):
     f_name = os.path.join(os.path.dirname(__file__), 'data/aspects.csv')
-    with open(f_name) as csvfile:
+    with open(f_name, 'rU') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             name = row['name'].lower()
@@ -24,8 +23,8 @@ def load_aspects_from_csv(apps, schema_editor):
 def load_intake_questions_from_csv(apps, schema_editor):
     f_name = os.path.join(os.path.dirname(__file__),
                           'data/intake_questions.csv')
-    with open(f_name) as csvfile:
-        reader = csv.DictReader(csvfile, delimiter=';')
+    with open(f_name, 'rU') as csvfile:
+        reader = csv.DictReader(csvfile, delimiter=str(u';').encode('utf-8'))
         for row in reader:
             aspect = Aspect.objects.get(name=row['aspect'].lower())
             question = row['question']
@@ -37,8 +36,8 @@ def load_intake_questions_from_csv(apps, schema_editor):
 def load_missions_from_csv(apps, schema_editor):
     f_name = os.path.join(os.path.dirname(__file__),
                           'data/missions.tsv')
-    with open(f_name) as csvfile:
-        reader = csv.DictReader(csvfile, delimiter='\t')
+    with open(f_name, 'rU') as csvfile:
+        reader = csv.DictReader(csvfile, delimiter=str(u'\t').encode('utf-8'))
         for row in reader:
             new_mission = Mission(image=row['image'],
                                   title=row['title'],
