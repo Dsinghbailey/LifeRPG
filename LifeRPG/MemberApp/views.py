@@ -148,10 +148,12 @@ def mission_review(request):
 
 #  Utility functions
 def create_profile_redirect(request):
-        if Profile.objects.filter(user=request.user).exists():
-            return False
-        else:
+        if not Profile.objects.filter(user=request.user).exists():
             return True
+        elif Profile.objects.get(user=request.user).created != 1:
+            return True
+        else:
+            return False
 
 
 def init_profile(request):
