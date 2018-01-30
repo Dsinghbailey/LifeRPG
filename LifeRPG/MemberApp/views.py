@@ -2,12 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .models import Profile, Aspect, UserAspect, IntakeQuestion,\
-    UserIntakeQuestion, Mission, UserMissionRating, UserFocus
+    UserIntakeQuestion, Mission, UserMissionRating, UserFocus,\
+    UserMissionRec
 from .forms import CreateProfileForm, MissionRatingForm, LevelUpForm
-from .datascience import get_user_missions
+import datetime
+from AdminApp.tasks import rec_user_missions
 
 MAX_XP = 100
-MISSIONS_PER_DAY = 5
 
 
 # Views
@@ -103,9 +104,11 @@ def levelup(request):
 def missions(request):
     if create_profile_redirect(request):
             return redirect('create_profile')
-    missions = get_user_missions(MISSIONS_PER_DAY)
+    rec_user_missions()
+    recs = UserMissionRec.objects.filter(user=request.user,
+                                         rec_date=datetime.date.today())
     return render(request, 'missions.html',
-                  {'missions': missions})
+                  {'recs': recs})
 
 
 @login_required

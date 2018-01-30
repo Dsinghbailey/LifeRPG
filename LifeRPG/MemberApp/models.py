@@ -7,7 +7,6 @@ class Mission(models.Model):
     image = models.CharField(max_length=200, null=True)
     title = models.CharField(max_length=50)
     content = models.CharField(max_length=200)
-    #  Unused
     science = models.CharField(max_length=200, null=True)
 
 
@@ -20,6 +19,13 @@ class Aspect(models.Model):
 class MissionAspect(models.Model):
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE)
     aspect = models.ForeignKey(Aspect, on_delete=models.CASCADE)
+
+
+class UserMissionRec(models.Model):
+    rec_date = models.DateField(default=datetime.now)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    mission = models.ForeignKey(Mission, on_delete=models.CASCADE)
+    rank = models.IntegerField()
 
 
 class UserMissionRating(models.Model):
@@ -36,8 +42,8 @@ class IntakeQuestion(models.Model):
 
 class UserIntakeQuestion(models.Model):
     log_time = models.DateTimeField(default=datetime.now)
-    question = models.ForeignKey(IntakeQuestion, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey(IntakeQuestion, on_delete=models.CASCADE)
     value = models.IntegerField(default=0)
 
     @property
